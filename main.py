@@ -3,7 +3,7 @@ from fuerza_bruta import hallar_combinaciones, calcular_ofertas
 from voraz import voraz
 from programacion_dinamica import programacion_dinamica
 
-nombre_de_archivo = "entrada.txt"
+nombre_de_archivo = "bsp_10_7_5.sub"
 
 if __name__ == '__main__':
     print("---------FUERZA BRUTA---------", "\n")
