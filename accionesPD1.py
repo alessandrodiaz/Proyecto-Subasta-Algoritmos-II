@@ -1,17 +1,12 @@
 import copy
 
 
-def programacion_dinamica(entrada):
-    print(entrada)
-    A = entrada[0]
-    B = entrada[1]
-    n = entrada[2]
-    ofertas = entrada[3]
-    p_gov = entrada[3][n][0]
-
+def accionesPD1(A, B, n, ofertas):
     matriz = []
     caminos = []
     numcompradores = n
+    p_gov = ofertas[n][0]
+    X = []  # array_solucion
 
     # Recorrer cada comprador
     for i in range(0, numcompradores, 1):
@@ -102,49 +97,25 @@ def programacion_dinamica(entrada):
                         # Insertamos el num de acciones del comprador nuevo
                         caminos[j][i].insert(
                             int(len(caminos[j][i]) / 2) + 1, [matriz[j][0][0]])
-
-    """
-  IMPRESION MATRICES -----------------
-  """
-    def imprimir_matriz(matriz):
-        for fila in matriz:
-            for celda in fila:
-                print("{:<6}".format(str(celda)), end="")
-            print()
-
-    # imprimir_matriz(matriz)
-
-    print("--> MATRIZ CAMINOS")
-    # for i in range(len(caminos)):
-    # print(caminos[i])
-
     """
   IMPRESION RESPUESTA -----------------
   """
 
     respuesta = caminos[posicionj][posicioni]
-    ncompradores = len(respuesta)/2
-
-    mensajecompradores = ""
+    ncompradores = len(respuesta) / 2
     accionesvendidas = 0
 
-    for i in range(1, numcompradores+1, 1):
+    for i in range(1, numcompradores + 1, 1):
         if int(i) not in caminos[posicionj][posicioni]:
-            mensajecompradores += "\n0"
+            X.append(0)
         else:
-            indice = respuesta.index(i)+int(ncompradores)
+            indice = respuesta.index(i) + int(ncompradores)
             acciones = respuesta[indice][0]
             accionesvendidas += acciones
-            mensajecompradores += "\n"+str(acciones)
+            X.append(acciones)
 
     # Acciones gobierno
-    mejorpreciofinal += (A-accionesvendidas)*p_gov
-    mensajecompradores += "\n"+str(A-accionesvendidas)
+    mejorpreciofinal += (A - accionesvendidas) * p_gov
+    X.append(A - accionesvendidas)
 
-    # Mensaje final
-    mensaje = "**RESPUESTA**\n"+str(mejorpreciofinal)+mensajecompradores
-    print(mensaje)
-
-    f = open("salida.txt", "w")
-    f.write(mensaje)
-    f.close()
+    return X, mejorpreciofinal

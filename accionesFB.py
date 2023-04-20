@@ -1,53 +1,15 @@
-def calcular_ofertas(entrada, combinacion_oferta):
-    mejor_precio = 0
-    ofertas = entrada[3]
-    mejor_mensaje = ""
-    n = entrada[2]
-    accionesrestantes = entrada[0]
-    precio = 0
-    mensaje = ""
-    mensaje_total = ""
-
-    for j in combinacion_oferta:
-        for i in range(0, n+1, 1):
-            if(i != n):
-                precio += int(ofertas[i][0])*int(j[i])
-                accionesrestantes = accionesrestantes-j[i]
-                mensaje += "Comprador " + \
-                    str(i+1)+": " + \
-                    str(j[i])+"($"+str(ofertas[i][0])+") | "
-            else:
-                mensaje += "Gov " + \
-                    str(i+1)+": " + \
-                    str(j[i])+"($"+str(ofertas[i][0])+") | "
-                precio += int(ofertas[i][0])*int(j[i])
-                accionesrestantes = accionesrestantes-j[i]
-        mensaje_total += mensaje + str(precio) + "\n"
-        if precio > mejor_precio:
-            mejor_precio = precio
-            mejor_mensaje = mensaje
-
-        accionesrestantes = entrada[0]
-        mensaje = ""
-        precio = 0
-
-    return [mensaje_total, "El mejor precio fue: " + str(mejor_precio)]
-
-
 '''
 Analiza las combinaciones con 0 y el maximo en cada posicion, creo que está correcto
 Devuelve un array las combinaciones viables con 0 y el maximo en cada posicion
 Si una convinacion no es viable, o sea, sea pasa de la cantidad de acciones a vender,
 simplemente no se retorna 
 Precondicion: las ofertas vienen ordenadas descendentemente por precio de accion
-Funcion hallar combinaciones posibles 
-A,B,n,ofertas @ [int,int,int,Array [ Array [] ] ] -> combinaciones_array @ [ Array [] ]
+Funcion hallar_combinaciones_posibles 
+A,B,n,ofertas @ [str,str,str,Array [ Array [] ] ] -> combinaciones_array @ [ Array [] ]
 '''
 
 
-def hallar_combinaciones(entrada):
-    n = entrada[2]
-    ofertas = entrada[3]
+def hallar_combinaciones_posibles(A, B, n, ofertas):
     combinaciones = []
     num_acciones_max = []
 
@@ -84,3 +46,33 @@ def hallar_combinaciones(entrada):
                 for k in range(n-1, i-1, -1):
                     combinacion_actual[k] = 0
     return combinaciones
+
+
+'''
+devuelve una pareja: un array X en donde se encuentra la compra de
+cada comprador y del gobierno y el otro elemento...
+Funcion accionesFB
+A,B,n,ofertas @ [str,str,str,Array [ Array [] ] ] -> pareja @ [ Array [], int ]
+'''
+
+
+def accionesFB(A, B, n, ofertas):
+    combinaciones_posibles = hallar_combinaciones_posibles(A, B, n, ofertas)
+
+    mejor_precio = 0
+    precio = 0
+
+    X = []  # arrary solucion
+    X_aux = []  # array con solucion temporal
+
+    for paquete in combinaciones_posibles:
+        for i in range(0, n+1, 1):
+            precio += int(ofertas[i][0])*int(paquete[i])
+            X_aux.append(paquete[i])
+        if precio > mejor_precio:
+            mejor_precio = precio
+            X = X_aux.copy()
+        X_aux.clear()
+        precio = 0
+
+    return (X, mejor_precio)
