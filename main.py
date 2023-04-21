@@ -4,6 +4,8 @@ from accionesV import accionesV
 from accionesPD1 import accionesPD1
 from accionesPD2 import accionesPD2
 
+
+archivo_entrada = "bsp_10_7_5.sub"
 archivo_entrada = "entrada.txt"
 archivo_salida = "salida.txt"
 
@@ -17,7 +19,7 @@ if __name__ == '__main__':
     print("\t 3. Programación dinámica")
     print("\t 4. Programación dinámica con paquetes de acciones")
 
-    A, B, n, ofertas = leer_entrada(archivo_entrada)
+    A, B, n, ofertas, tamano_paquetes = leer_entrada(archivo_entrada)
     # print(A,B,n,ofertas)
 
     eleccion = None
@@ -38,17 +40,19 @@ if __name__ == '__main__':
             resultado = accionesPD1(A, B, n, ofertas)
             print(resultado)
             escribir_salida(resultado, archivo_salida)
-        elif eleccion == "4":
-            resultado = accionesPD2(A, B, n, ofertas)
+        elif eleccion == "4" and tamano_paquetes != None:
+            resultado = accionesPD2(A, B, n, ofertas, tamano_paquetes)
             print(resultado)
             escribir_salida(resultado, archivo_salida)
         else:
             print("Por favor elije una opcion valida\n")
 
     print("////////////////////////////// BORRAR")
-    # print(accionesFB(A,B,n,ofertas))
-    # print(accionesV(A,B,n,ofertas))
-    # print(accionesPD1(A,B,n,ofertas))
+    print("BRUTA: ", accionesFB(A, B, n, ofertas))
+    print("VORAZ: ", accionesV(A, B, n, ofertas))
+    print("DINAMICA: ", accionesPD1(A, B, n, ofertas))
+    if tamano_paquetes != None:
+        print("PAQUETES: ", accionesPD2(A, B, n, ofertas, tamano_paquetes))
     print("////////////////////////////// BORRAR")
 
     print("Tu salida ya se encuentra en el archivo salida.txt")

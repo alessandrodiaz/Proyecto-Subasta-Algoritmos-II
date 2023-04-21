@@ -30,22 +30,31 @@ def leer_entrada(filename):
 
     ofertas = []
 
+    count = 0
+
     with open(filename, "r") as archivo:
         lineas = archivo.readlines()
+        len_entrada = len(lineas)
         A = int(lineas[0])
         B = int(lineas[1])
         n = int(lineas[2])
+        tamano_paquetes = None
 
-        for linea in lineas[3:]:
+        for i, linea in enumerate(lineas[3:]):
+            count += 1
+
             oferta = linea.strip().split(",")
 
-            p = int(oferta[0])  # Precio por acción
-            c = int(oferta[1])  # Máximo de acciones que compraría
-            r = int(oferta[2])  # Mínimo de acciones que compraría
+            if i == len(lineas[3:])-1 and len(oferta) == 1:
+                tamano_paquetes = int(oferta[0])
+            else:
+                p = int(oferta[0])  # Precio por acción
+                c = int(oferta[1])  # Máximo de acciones que compraría
+                r = int(oferta[2])  # Mínimo de acciones que compraría
+                ofertas.append([p, c, r])
+        # print(A, B, n, ofertas, tamano_paquetes)
 
-            ofertas.append([p, c, r])
-
-    return A, B, n, ofertas
+    return A, B, n, ofertas, tamano_paquetes
 
 
 '''

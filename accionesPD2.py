@@ -1,12 +1,12 @@
 import copy
 
 
-def accionesPD2(A, B, n, ofertas):
+def accionesPD2(A, B, n, ofertas, tamano_paquetes):
     matriz = []
     caminos = []
-    numcompradores = n
-    p_gov = ofertas[n][0]
-    tam_paq = ofertas[n][2]
+    numcompradores = n-1
+    p_gov = ofertas[n-1][0]
+    # tamano_paquetes = ofertas[n][2]
     X = []  # array_solucion
 
     # Recorrer cada comprador
@@ -18,7 +18,7 @@ def accionesPD2(A, B, n, ofertas):
         accionactual = r
 
         # Crear cada posible accion en la matriz
-        for j in range(r, c + 1, tam_paq):
+        for j in range(r, c + 1, tamano_paquetes):
             beneficio = j * p
             fila = [[j, beneficio, i + 1]]
             #filacaminos = [[j, beneficio, i + 1]]
@@ -36,12 +36,12 @@ def accionesPD2(A, B, n, ofertas):
 
     # Recorrer de izquierda a derecha la matriz
     iteracion = 0
-    for i in range(0, numcolumnas + tam_paq, tam_paq):
+    for i in range(0, numcolumnas + tamano_paquetes, tamano_paquetes):
 
         # Recorrer cada columna
         for j in range(0, len(matriz), 1):
 
-            indice_columna = int(i / tam_paq)
+            indice_columna = int(i / tamano_paquetes)
             mejoropcion = 0
 
             # Si coincide (diagonal)
@@ -62,7 +62,8 @@ def accionesPD2(A, B, n, ofertas):
                 columna = i
                 # La capacidad restante es el num de la columna (capacidad) menos el peso del item
                 capacidadrestante = columna - matriz[j][0][0]
-                indice_columna_busqueda = int(capacidadrestante / tam_paq)
+                indice_columna_busqueda = int(
+                    capacidadrestante / tamano_paquetes)
 
                 if capacidadrestante > 0:
                     # Cual es el valor mas alto de la columna indicada
@@ -90,7 +91,7 @@ def accionesPD2(A, B, n, ofertas):
 
                         beneficio = mejoropcion + matriz[j][0][1]
 
-                        indice_columna = int(i / tam_paq)
+                        indice_columna = int(i / tamano_paquetes)
                         matriz[j][indice_columna] = beneficio
 
                         # Guardamos el mejor precio hasta el momento
@@ -107,8 +108,8 @@ def accionesPD2(A, B, n, ofertas):
 
         iteracion += 1
 
-    for i in range(len(matriz)):
-        print(matriz[i])
+    # for i in range(len(matriz)):
+        # print(matriz[i])
 
     """
   IMPRESION RESPUESTA -----------------
@@ -130,6 +131,6 @@ def accionesPD2(A, B, n, ofertas):
     # Acciones gobierno
     mejorpreciofinal += (A - accionesvendidas) * p_gov
     X.append(A - accionesvendidas)
-    print(X, mejorpreciofinal)
+    #print(X, mejorpreciofinal)
 
     return X, mejorpreciofinal

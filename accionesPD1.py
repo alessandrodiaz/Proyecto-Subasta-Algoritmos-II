@@ -4,8 +4,8 @@ import copy
 def accionesPD1(A, B, n, ofertas):
     matriz = []
     caminos = []
-    numcompradores = n
-    p_gov = ofertas[n][0]
+    numcompradores = n-1
+    p_gov = ofertas[n-1][0]
     X = []  # array_solucion
 
     # Recorrer cada comprador
