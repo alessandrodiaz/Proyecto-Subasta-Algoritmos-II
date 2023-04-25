@@ -61,16 +61,16 @@ if __name__ == '__main__':
             print("////////////////////////////// BORRAR")
             # print(archivo_entrada)
             # print("BRUTA: ", accionesFB(A, B, n, ofertas))
-            # print("VORAZ: ", accionesV(A, B, n, ofertas))
             # print(archivo_entrada)
+            # print("VORAZ: ", accionesV(A, B, n, ofertas))
 
             if not archivo.endswith('.psub'):
                 print(archivo_entrada)
                 print("DINAMICA: ", accionesPD1(A, B, n, ofertas))
-            # if tamano_paquetes != None:
-            #     print(archivo_entrada)
-            #     print("PAQUETES: ", accionesPD2(
-            #         A, B, n, ofertas, tamano_paquetes))
+            if tamano_paquetes != None:
+                print(archivo_entrada)
+                print("PAQUETES: ", accionesPD2(
+                    A, B, n, ofertas, tamano_paquetes))
 
             end_time = time.time()
             duration = end_time - start_time
