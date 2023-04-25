@@ -1,12 +1,11 @@
 import copy
 
 
-def accionesPD2(A, B, n, ofertas, tamano_paquetes):
+def accionesPD1(A, B, n, ofertas):
     matriz = []
     caminos = []
     numcompradores = n-1
     p_gov = ofertas[n-1][0]
-    # tamano_paquetes = ofertas[n][2]
     X = []  # array_solucion
 
     # Recorrer cada comprador
@@ -18,8 +17,8 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
         accionactual = r
 
         # Crear cada posible accion en la matriz
-        for j in range(r, c + 1, tamano_paquetes):
-            beneficio = j * p
+        for j in range(r, c + 1, 1):
+            beneficio = accionactual * p
             fila = [[j, beneficio, i + 1]]
             # filacaminos = [[j, beneficio, i + 1]]
 
@@ -27,7 +26,6 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
             caminos.append(fila.copy())  # changed
             accionactual += 1
 
-    print("Matriz creada")
     # Llenar datos de la matriz
     numcolumnas = int(A)
     # Vamos guardando el mejor precio de la matriz
@@ -36,16 +34,11 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
     posicioni = None
 
     # Recorrer de izquierda a derecha la matriz
-    iteracion = 0
-    for i in range(0, numcolumnas + tamano_paquetes, tamano_paquetes):
-        prueba = i*100/numcolumnas
-        if prueba % 1 == 0:
-            print(prueba, numcolumnas)
+    for i in range(0, numcolumnas + 1, 1):
 
         # Recorrer cada columna
         for j in range(0, len(matriz), 1):
 
-            indice_columna = int(i / tamano_paquetes)
             mejoropcion = 0
 
             # Si coincide (diagonal)
@@ -55,66 +48,55 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
 
             if i > 0:
                 if i == (matriz[j][0][0]):
-                    matriz[j][iteracion] = matriz[j][0][1]
-                    caminos[j][iteracion].append(matriz[j][0][2])
-                    caminos[j][iteracion].append([matriz[j][0][0]])
+                    matriz[j][i] = matriz[j][0][1]
+                    caminos[j][i].append(matriz[j][0][2])
+                    caminos[j][i].append([matriz[j][0][0]])
 
-            # Empezamos a hacer calculos desde la (columna) 2
+            # Empezamos a hacer calculos desde la accion (columna) 2
             if i > 1:
                 comprador = 0
                 compradores = []
                 columna = i
                 # La capacidad restante es el num de la columna (capacidad) menos el peso del item
                 capacidadrestante = columna - matriz[j][0][0]
-                indice_columna_busqueda = int(
-                    capacidadrestante / tamano_paquetes)
 
                 if capacidadrestante > 0:
                     # Cual es el valor mas alto de la columna indicada
                     for k in range(0, len(matriz), 1):
-
-                        if matriz[k][indice_columna_busqueda] > mejoropcion:
+                        if matriz[k][capacidadrestante] > mejoropcion:
                             # Si el elemento actual no es del mismo comprador
                             if matriz[k][0][2] != matriz[j][0][2]:
                                 # Si el comprador no esta en el camino
-                                if matriz[j][0][2] not in caminos[k][indice_columna_busqueda]:
+                                if matriz[j][0][2] not in caminos[k][capacidadrestante]:
                                     compradores = []
                                     comprador = 0
 
                                     # Tomamos beneficio de la mejor opcion
-                                    mejoropcion = matriz[k][indice_columna_busqueda]
+                                    mejoropcion = matriz[k][capacidadrestante]
 
                                     # Tomamos id del comprador actual
                                     comprador = copy.copy(matriz[j][0][2])
 
                                     # Tomamos los caminos previos de la mejor opcion
                                     compradores = copy.copy(
-                                        caminos[k][indice_columna_busqueda])
+                                        caminos[k][capacidadrestante])
 
                     if mejoropcion > 0:
 
                         beneficio = mejoropcion + matriz[j][0][1]
-
-                        indice_columna = int(i / tamano_paquetes)
-                        matriz[j][indice_columna] = beneficio
+                        matriz[j][i] = beneficio
 
                         # Guardamos el mejor precio hasta el momento
                         if beneficio > mejorpreciofinal:
                             mejorpreciofinal = beneficio
-                            posicioni = indice_columna
+                            posicioni = i
                             posicionj = j
 
                         compradores.insert(0, comprador)
-                        caminos[j][indice_columna] = compradores
+                        caminos[j][i] = compradores
                         # Insertamos el num de acciones del comprador nuevo
-                        caminos[j][indice_columna].insert(
-                            int(len(caminos[j][indice_columna]) / 2) + 1, [matriz[j][0][0]])
-
-        iteracion += 1
-
-    for i in range(len(caminos)):
-        print(caminos[i])
-
+                        caminos[j][i].insert(
+                            int(len(caminos[j][i]) / 2) + 1, [matriz[j][0][0]])
     """
   IMPRESION RESPUESTA -----------------
   """
@@ -135,6 +117,5 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
     # Acciones gobierno
     mejorpreciofinal += (A - accionesvendidas) * p_gov
     X.append(A - accionesvendidas)
-    # print(X, mejorpreciofinal)
 
     return X, mejorpreciofinal

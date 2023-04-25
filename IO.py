@@ -30,19 +30,14 @@ def leer_entrada(filename):
 
     ofertas = []
 
-    count = 0
-
     with open(filename, "r") as archivo:
         lineas = archivo.readlines()
-        len_entrada = len(lineas)
         A = int(lineas[0])
-        B = int(lineas[1])
+        B = float(lineas[1])
         n = int(lineas[2])
         tamano_paquetes = None
 
         for i, linea in enumerate(lineas[3:]):
-            count += 1
-
             oferta = linea.strip().split(",")
 
             if i == len(lineas[3:])-1 and len(oferta) == 1:

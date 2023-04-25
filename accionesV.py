@@ -10,7 +10,7 @@ A,B,n,ofertas @ [str,str,str,Array [ Array [] ] ] -> pareja @ [ Array [], int ]
 
 def accionesV(A, B, n, ofertas):
     accionesrestantes = int(A)
-    precio = 0
+    precio = 0.0
     X = []  # array_solucion
 
     # Ofertas vienen ordenadas de mayor a menor precio por accion
