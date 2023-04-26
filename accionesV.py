@@ -14,7 +14,7 @@ def accionesV(A, B, n, ofertas):
     X = []  # array_solucion
 
     # Ofertas vienen ordenadas de mayor a menor precio por accion
-    for i in range(0, n-1, 1):
+    for i in range(0, n, 1):
         max_acciones = int(ofertas[i][1])
         min_acciones = int(ofertas[i][2])
         precio_accion = int(ofertas[i][0])

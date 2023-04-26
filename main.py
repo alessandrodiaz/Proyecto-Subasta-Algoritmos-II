@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 eleccion = input('Elije que algoritmo quieres usar: ')
                 print("El algoritmo que elejiste fue: ", eleccion)
                 if eleccion == '1':
-                    resultado = accionesFB(A, B, n-1, ofertas)
+                    resultado = accionesFB(A, B, n, ofertas)
                     print(resultado)
                     escribir_salida(resultado, archivo_salida)
                 elif eleccion == '2':
@@ -59,14 +59,14 @@ if __name__ == '__main__':
             """
 
             print("////////////////////////////// BORRAR")
-            print(archivo_entrada)
-            print("BRUTA: ", accionesFB(A, B, n-1, ofertas))
             # print(archivo_entrada)
-            # print("VORAZ: ", accionesV(A, B, n-1, ofertas))
+            # print("BRUTA: ", accionesFB(A, B, n, ofertas))
+            # print(archivo_entrada)
+            # print("VORAZ: ", accionesV(A, B, n, ofertas))
 
-            # if not archivo.endswith('.psub'):
-            #     print(archivo_entrada)
-            #     print("DINAMICA: ", accionesPD1(A, B, n, ofertas))
+            if not archivo.endswith('.psub'):
+                print(archivo_entrada)
+                print("DINAMICA: ", accionesPD1(A, B, n, ofertas))
             # if tamano_paquetes != None:
             #     print(archivo_entrada)
             #     print("PAQUETES: ", accionesPD2(
