@@ -126,7 +126,7 @@ def accionesPD2(A, B, n, ofertas, tamano_paquetes):
 
     arraysolucion = []
 
-    for i in range(1, numcompradores, 1):
+    for i in range(1, numcompradores+1, 1):
         if i in solucioncaminos:
             arraysolucion.append(solucioncaminos[i])
         else:
