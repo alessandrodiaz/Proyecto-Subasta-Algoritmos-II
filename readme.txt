@@ -8,3 +8,12 @@ Proyecto #1 para el curso de Análisis y Diseño de Algoritmos II
         3. Ejecutar el script
             py main.py
         4. Usa la interfaze
+    Archivos entregados: 
+        * Bateria pruebas profesores
+        * Pruebas propias
+        * accionesV.py
+        * accionesFB.py
+        * accionesPD1.py
+        * accionesPD2.py
+        * main.py
+        
